@@ -4,7 +4,7 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/fetures/autentication/widgets/email_screen.dart';
 import 'package:tiktok_clone/fetures/autentication/widgets/form_button.dart';
-import 'package:tiktok_clone/fetures/autentication/onbording/interests_screen.dart';
+import 'package:tiktok_clone/fetures/onbording/interests_screen.dart';
 
 class BirthdayScreen extends StatefulWidget {
   const BirthdayScreen({super.key});
@@ -30,11 +30,11 @@ class _UsernameScreenState extends State<BirthdayScreen> {
   }
 
   void _onNextTap() {
-    Navigator.push(
-      context,
+    Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
         builder: (context) => const InterestsScreen(),
       ),
+      (route) => false,
     );
   }
 
