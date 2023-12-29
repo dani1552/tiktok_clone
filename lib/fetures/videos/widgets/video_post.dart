@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
-class VideoPost extends StatefulWidget {
+class VideoPost extends StatefulWidget with SingleTickerProviderStateMixin {
   final Function onVideoFinished;
   final int index;
-  const VideoPost(
-      {super.key, required this.onVideoFinished, required this.index});
+  VideoPost({super.key, required this.onVideoFinished, required this.index});
 
   @override
   State<VideoPost> createState() => _VideoPostState();
@@ -17,6 +17,10 @@ class VideoPost extends StatefulWidget {
 class _VideoPostState extends State<VideoPost> {
   final VideoPlayerController _videoPlayerController =
       VideoPlayerController.asset("assets/videos/video.mp4");
+
+  bool _isPaused = false;
+  final Duration _animationDuration = const Duration(milliseconds: 200);
+  late final AnimationController _animationController;
 
   void _onVideoChange() {
     if (_videoPlayerController.value.isInitialized) {
@@ -40,6 +44,10 @@ class _VideoPostState extends State<VideoPost> {
   void initState() {
     super.initState();
     _initVideoPlayer();
+
+    _animationController = AnimationController(
+      vsync: this,
+    );
   }
 
   @override
@@ -60,6 +68,9 @@ class _VideoPostState extends State<VideoPost> {
     } else {
       _videoPlayerController.play();
     }
+    setState(() {
+      _isPaused = !_isPaused;
+    });
   }
 
   @override
@@ -81,10 +92,20 @@ class _VideoPostState extends State<VideoPost> {
               onTap: _onTogglePause,
             ),
           ),
-          const Positioned.fill(
-            child: Center(
-              child: FaIcon(
-                FontAwesomeIcons.play,
+          IgnorePointer(
+            child: Positioned.fill(
+              child: IgnorePointer(
+                child: Center(
+                  child: AnimatedOpacity(
+                    duration: _animationDuration,
+                    opacity: _isPaused ? 1 : 0,
+                    child: const FaIcon(
+                      FontAwesomeIcons.play,
+                      color: Colors.white,
+                      size: Sizes.size52,
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
