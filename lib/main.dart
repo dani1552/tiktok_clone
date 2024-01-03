@@ -29,7 +29,7 @@ class TikTokApp extends StatelessWidget {
               fontWeight: FontWeight.w600,
             )),
       ),
-      home: MainNavigationScreen(),
+      home: const MainNavigationScreen(),
     );
   }
 }
