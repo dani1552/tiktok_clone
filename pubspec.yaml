@@ -64,6 +64,11 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/videos/video.mp4
+    - assets/images/hellokitty.png
+    - assets/images/keropi.png
+    - assets/images/kuromi.png
+    - assets/images/mymelody.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
