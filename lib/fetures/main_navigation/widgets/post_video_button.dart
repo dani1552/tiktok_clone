@@ -5,7 +5,9 @@ import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/fetures/main_navigation/main_navigation_screen.dart';
 
 class PostVideoButton extends StatelessWidget {
-  const PostVideoButton({super.key, required bool inverted});
+  const PostVideoButton({super.key, required this.inverted});
+
+  final bool inverted;
 
   @override
   Widget build(BuildContext context) {
@@ -55,10 +57,10 @@ class PostVideoButton extends StatelessWidget {
               Sizes.size6,
             ),
           ),
-          child: const Center(
+          child: Center(
             child: FaIcon(
               FontAwesomeIcons.plus,
-              color: Colors.black,
+              color: !inverted ? Colors.black : Colors.white,
               size: 18,
             ),
           ),
