@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
@@ -22,7 +23,7 @@ class VideoPost extends StatefulWidget {
 
 class _VideoPostState extends State<VideoPost>
     with SingleTickerProviderStateMixin {
-  final VideoPlayerController _videoPlayerController =
+  VideoPlayerController _videoPlayerController =
       VideoPlayerController.asset("assets/videos/video.mp4");
 
   bool _isPaused = false;
@@ -42,8 +43,13 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _initVideoPlayer() async {
+    _videoPlayerController =
+        VideoPlayerController.asset("assets/videos/video.mp4");
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
+    if (kIsWeb) {
+      await _videoPlayerController.setVolume(0);
+    }
     _videoPlayerController.addListener(_onVideoChange);
     setState(() {});
   }
