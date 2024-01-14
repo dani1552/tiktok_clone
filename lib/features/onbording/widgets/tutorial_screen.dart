@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/fetures/main_navigation/main_navigation_screen.dart';
-import 'package:tiktok_clone/fetures/onbording/interests_screen.dart';
+import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
+import 'package:tiktok_clone/features/onbording/interests_screen.dart';
 
 enum Direction { right, left }
 
@@ -49,7 +49,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
   void _onEnterAppTap() {
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
-        builder: (context) => MainNavigationScreen(),
+        builder: (context) => const MainNavigationScreen(),
       ),
       (route) => false,
     );

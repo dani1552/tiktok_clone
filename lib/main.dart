@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/fetures/inbox/activity_screen.dart';
-import 'package:tiktok_clone/fetures/main_navigation/main_navigation_screen.dart';
-import 'package:tiktok_clone/fetures/onbording/interests_screen.dart';
-import 'package:tiktok_clone/fetures/autentication/widgets/sign_up_screen.dart';
+import 'package:tiktok_clone/features/inbox/activity_screen.dart';
+import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
+import 'package:tiktok_clone/features/onbording/interests_screen.dart';
+import 'package:tiktok_clone/features/autentication/widgets/sign_up_screen.dart';
 import 'dart:ffi';
 
 void main() {
@@ -27,14 +27,15 @@ class TikTokApp extends StatelessWidget {
         splashColor: Colors.transparent,
         //highlightColor: Colors.transparent,
         appBarTheme: const AppBarTheme(
-            foregroundColor: Colors.black,
-            backgroundColor: Colors.white,
-            elevation: 0,
-            titleTextStyle: TextStyle(
-              color: Colors.black,
-              fontSize: Sizes.size16 + Sizes.size2,
-              fontWeight: FontWeight.w600,
-            )),
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.white,
+          elevation: 0,
+          titleTextStyle: TextStyle(
+            color: Colors.black,
+            fontSize: Sizes.size16 + Sizes.size2,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
       home: const MainNavigationScreen(),
     );
