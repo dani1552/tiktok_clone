@@ -15,8 +15,6 @@ class UserProfileScreen extends StatefulWidget {
 
 class _UserProfileScreenState extends State<UserProfileScreen>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
   void _onGearPressed() {
     Navigator.of(context).push(
       MaterialPageRoute(
