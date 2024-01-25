@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/autentication/widgets/login_form_screen.dart';
 import 'package:tiktok_clone/features/autentication/widgets/auth_button.dart';
+import 'package:tiktok_clone/features/autentication/widgets/login_form_screen.dart';
 import 'package:tiktok_clone/utils.dart';
 
 class LoginScreen extends StatelessWidget {
-  static String routeName = "/login";
+  // 수정된 부분: 생성자 제거
+  static String routeName = "login";
+  static String routeURL = "/login";
+
   const LoginScreen({super.key});
 
+  // 수정된 부분: _onSignUpTap 메서드에서 context.pop() 사용
   void _onSignUpTap(BuildContext context) {
-    context.pop();
+    Navigator.pop(context);
   }
 
+  // 수정된 부분: _onEmailLoginTap 메서드에서 Navigator.push 사용
   void _onEmailLoginTap(BuildContext context) {
-    Navigator.of(context).push(
+    Navigator.push(
+      context,
       MaterialPageRoute(
         builder: (context) => const LoginFormScreen(),
       ),

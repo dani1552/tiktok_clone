@@ -9,14 +9,22 @@ import 'package:tiktok_clone/features/autentication/widgets/auth_button.dart';
 import 'package:tiktok_clone/utils.dart';
 
 class SignUpScreen extends StatelessWidget {
-  static String routeName = "/";
+  static String routeURL = "/";
+  static String routeName = "signUp";
   const SignUpScreen({super.key});
 
   void _onLoginTap(BuildContext context) async {
-    context.push("/login");
+    context.pushNamed(LoginScreen.routeName);
   }
 
   void _onEmailTap(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const UsernameScreen(),
+      ),
+    );
+
     /*  Navigator.of(context).push(
       PageRouteBuilder(
         transitionDuration: const Duration(seconds: 1),
@@ -42,7 +50,6 @@ class SignUpScreen extends StatelessWidget {
         },
       ),
     ); */
-    context.push(UsernameScreen.routeNmae);
   }
 
   @override

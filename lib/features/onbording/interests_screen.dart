@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/onbording/widgets/interests_button.dart';
 import 'package:tiktok_clone/features/onbording/widgets/tutorial_screen.dart';
 
 class InterestsScreen extends StatefulWidget {
+  static const String routeName = "interests";
+  static const String routeURL = "/tutorial";
   const InterestsScreen({super.key});
 
   @override
@@ -93,6 +96,7 @@ class _InterestsScreenState extends State<InterestsScreen> {
       "Oddly Satisfying",
       "Home & Garden",
     ];
+
     return Scaffold(
       appBar: AppBar(
         title: AnimatedOpacity(
