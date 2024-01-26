@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/autentication/widgets/email_screen.dart';
-import 'package:tiktok_clone/features/autentication/widgets/login_screen.dart';
-import 'package:tiktok_clone/features/autentication/widgets/sign_up_screen.dart';
-import 'package:tiktok_clone/features/autentication/widgets/username_screen.dart';
 import 'package:tiktok_clone/router.dart';
 
 void main() async {
