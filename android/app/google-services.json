@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "707196677230",
+    "project_id": "tik-tok-dani1552",
+    "storage_bucket": "tik-tok-dani1552.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:707196677230:android:df9d26942a0b9aa6fc0a7f",
+        "android_client_info": {
+          "package_name": "com.example.tiktok_clone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAezPCZqg2-rcYYOIoAAYvH0k20tvvgsQU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
