@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/autentication/view_models/signup_view_model.dart';
 import 'package:tiktok_clone/features/autentication/widgets/form_button.dart';
-import 'package:tiktok_clone/features/onbording/interests_screen.dart';
 
 class BirthdayScreen extends ConsumerStatefulWidget {
   const BirthdayScreen({super.key});
@@ -32,7 +30,7 @@ class _UsernameScreenState extends ConsumerState<BirthdayScreen> {
   }
 
   void _onNextTap() {
-    print(ref.read(signUpForm));
+    ref.read(signUpProvider.notifier).signUp(context);
     // context.goNamed(InterestsScreen.routeName);
   }
 
@@ -91,7 +89,9 @@ class _UsernameScreenState extends ConsumerState<BirthdayScreen> {
             ),
             Gaps.v28,
             GestureDetector(
-                onTap: _onNextTap, child: const FormButton(disabled: false)),
+              onTap: _onNextTap,
+              child: FormButton(disabled: ref.watch(signUpProvider).isLoading),
+            ),
           ],
         ),
       ),

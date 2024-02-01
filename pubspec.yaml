@@ -55,6 +55,7 @@ dependencies:
   firebase_auth: ^4.16.0
   cloud_firestore: ^4.14.0
   firebase_storage: ^11.6.0
+  flutter_provider: ^2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -82,10 +83,6 @@ flutter:
   assets:
     - assets/videos/video.mp4
     - assets/images/hellokitty.png
-    - assets/images/keropi.png
-    - assets/images/kuromi.png
-    - assets/images/mymelody.png
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
