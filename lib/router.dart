@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/common/widgets/main_navigation_screen.dart';
-import 'package:tiktok_clone/features/autentication/repos/authentication_repo.dart';
 import 'package:tiktok_clone/features/autentication/widgets/login_screen.dart';
 import 'package:tiktok_clone/features/autentication/widgets/sign_up_screen.dart';
 import 'package:tiktok_clone/features/inbox/activity_screen.dart';
@@ -11,21 +10,23 @@ import 'package:tiktok_clone/features/inbox/chats_screen.dart';
 import 'package:tiktok_clone/features/onbording/interests_screen.dart';
 import 'package:tiktok_clone/features/videos/video_recording_screen.dart';
 
+import 'features/autentication/repos/authentication_repo.dart';
+
 final routerProvider = Provider(
   (ref) {
-    ref.read(autoRepo);
+    ref.read(authRepo);
     return GoRouter(
       initialLocation: "/home",
-      redirect: (context, state) {
-        final isLoggedIn = ref.read(authRepo).isLoggedIn;
-        if (!isLoggedIn) {
-          if (state.subloc != SignUpScreen.routeURL &&
-              state.subloc != LoginScreen.routeURL) {
-            return SignUpScreen.routeURL;
-          }
-        }
-        return null;
-      },
+      // redirect: (context, state) {
+      //   final isLoggedIn = ref.read(authRepo).isLoggedIn;
+      //   if (!isLoggedIn) {
+      //     if (state.subloc != SignUpScreen.routeURL &&
+      //         state.subloc != LoginScreen.routeURL) {
+      //       return SignUpScreen.routeURL;
+      //     }
+      //   }
+      //   return null;
+      // },
       routes: [
         GoRoute(
           name: SignUpScreen.routeName,
@@ -59,17 +60,18 @@ final routerProvider = Provider(
           path: ChatsScreen.routeURL,
           name: ChatsScreen.routeName,
           builder: (context, state) => const ChatsScreen(),
-          routes: const [],
-        ),
-        GoRoute(
-          path: ChatDetailScreen.routeURL,
-          name: ChatDetailScreen.routeName,
-          builder: (context, state) {
-            final chatId = state.params["chatId"]!;
-            return ChatDetailScreen(
-              chatId: chatId,
-            );
-          },
+          routes: [
+            GoRoute(
+              path: ChatDetailScreen.routeURL,
+              name: ChatDetailScreen.routeName,
+              builder: (context, state) {
+                final chatId = state.params["chatId"] ?? "";
+                return ChatDetailScreen(
+                  chatId: chatId,
+                );
+              },
+            ),
+          ],
         ),
         GoRoute(
           path: VideoRecordingScreen.routeURL,

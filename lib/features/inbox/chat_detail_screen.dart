@@ -6,7 +6,7 @@ import 'package:tiktok_clone/constants/sizes.dart';
 
 class ChatDetailScreen extends StatefulWidget {
   static String routeName = "chatDetail";
-  static String routeURL = "/:chatId";
+  static String routeURL = ":chatId";
   final String chatId;
   const ChatDetailScreen({
     super.key,

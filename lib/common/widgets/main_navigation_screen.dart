@@ -105,10 +105,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               ),
               Gaps.h24,
               GestureDetector(
-                  onTap: _onPostVideoButtonTap,
-                  child: PostVideoButton(
-                    inverted: _selectedIndex != 0,
-                  )),
+                onTap: _onPostVideoButtonTap,
+                child: PostVideoButton(inverted: _selectedIndex != 0),
+              ),
               Gaps.h24,
               NavTab(
                 text: "Inbox",
