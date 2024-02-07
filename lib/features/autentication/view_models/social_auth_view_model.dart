@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/features/autentication/repos/authentication_repo.dart';
-import 'package:tiktok_clone/features/onbording/interests_screen.dart';
 import 'package:tiktok_clone/utils.dart';
 
 class SocialAuthViewModel extends AsyncNotifier<void> {
