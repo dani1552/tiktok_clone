@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,18 +5,26 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/onbording/widgets/video_comments.dart';
-import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
 import 'package:tiktok_clone/features/users/views/widgets/video_button.dart';
+import 'package:tiktok_clone/features/videos/models/video_model.dart';
+import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+import 'package:tiktok_clone/generated/l10n.dart';
+import 'package:tiktok_clone/features/videos/view_models/video_post_view_models.dart';
 
 class VideoPost extends ConsumerStatefulWidget {
   final Function onVideoFinished;
+  final VideoModel videoData;
+
   final int index;
 
-  const VideoPost(
-      {Key? key, required this.onVideoFinished, required this.index})
-      : super(key: key);
+  const VideoPost({
+    super.key,
+    required this.videoData,
+    required this.onVideoFinished,
+    required this.index,
+  });
 
   @override
   VideoPostState createState() => VideoPostState();
@@ -25,23 +32,26 @@ class VideoPost extends ConsumerStatefulWidget {
 
 class VideoPostState extends ConsumerState<VideoPost>
     with SingleTickerProviderStateMixin {
-  VideoPlayerController _videoPlayerController =
-      VideoPlayerController.asset("assets/videos/video.mp4");
+  late final VideoPlayerController _videoPlayerController;
+
+  final Duration _animationDuration = const Duration(milliseconds: 200);
+
+  late final AnimationController _animationController;
 
   bool _isPaused = false;
-  final Duration _animationDuration = const Duration(milliseconds: 200);
-  late final AnimationController _animationController;
+  final bool _isMuted = false;
 
   void _onVideoChange() {
     if (_videoPlayerController.value.isInitialized) {
-      //_videoPlayerController.value.duration: 영상의 길이
-      //_videoPlayerController.value.position: 현재 영상 내의 위치
-      //영상이 끝났을 때 onVideoFinished 호출
       if (_videoPlayerController.value.duration ==
           _videoPlayerController.value.position) {
         widget.onVideoFinished();
       }
     }
+  }
+
+  void _onLikeTap() {
+    ref.read(videoPostProvider(widget.videoData.id).notifier).likeVideo();
   }
 
   void _initVideoPlayer() async {
@@ -53,9 +63,7 @@ class VideoPostState extends ConsumerState<VideoPost>
       await _videoPlayerController.setVolume(0);
     }
     _videoPlayerController.addListener(_onVideoChange);
-    if (mounted) {
-      setState(() {});
-    }
+    setState(() {});
   }
 
   @override
@@ -64,7 +72,6 @@ class VideoPostState extends ConsumerState<VideoPost>
     _initVideoPlayer();
 
     _animationController = AnimationController(
-      //this -> _VideoPostState 클래스 호출(ticker를 최대한 빠르게 잡기 위해서)
       vsync: this,
       lowerBound: 1.0,
       upperBound: 1.5,
@@ -76,12 +83,15 @@ class VideoPostState extends ConsumerState<VideoPost>
   @override
   void dispose() {
     _videoPlayerController.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
   void _onPlaybackConfigChanged() {
     if (!mounted) return;
-    if (ref.read(playbackConfigProvider).muted) {
+    final muted = ref.read(playbackConfigProvider).muted;
+    ref.read(playbackConfigProvider.notifier).setMuted(!muted);
+    if (muted) {
       _videoPlayerController.setVolume(0);
     } else {
       _videoPlayerController.setVolume(1);
@@ -105,11 +115,9 @@ class VideoPostState extends ConsumerState<VideoPost>
   void _onTogglePause() {
     if (_videoPlayerController.value.isPlaying) {
       _videoPlayerController.pause();
-      //lowerBound -> upperBound
       _animationController.reverse();
     } else {
       _videoPlayerController.play();
-      //upperBound -> lowerBound
       _animationController.forward();
     }
     setState(() {
@@ -140,8 +148,9 @@ class VideoPostState extends ConsumerState<VideoPost>
           Positioned.fill(
             child: _videoPlayerController.value.isInitialized
                 ? VideoPlayer(_videoPlayerController)
-                : Container(
-                    color: Colors.black,
+                : Image.network(
+                    widget.videoData.thumbnailUrl,
+                    fit: BoxFit.cover,
                   ),
           ),
           Positioned.fill(
@@ -186,66 +195,65 @@ class VideoPostState extends ConsumerState<VideoPost>
               onPressed: _onPlaybackConfigChanged,
             ),
           ),
-          const Positioned(
+          Positioned(
             bottom: 20,
-            left: 20,
+            left: 10,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "@니꼬",
-                  style: TextStyle(
+                  "@${widget.videoData.creator}",
+                  style: const TextStyle(
                     fontSize: Sizes.size20,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Gaps.v24,
+                Gaps.v10,
                 Text(
-                  'This is my school in Asan!!!',
-                  style: TextStyle(
+                  widget.videoData.description,
+                  style: const TextStyle(
                     fontSize: Sizes.size16,
                     color: Colors.white,
                   ),
-                ),
+                )
               ],
             ),
           ),
           Positioned(
             bottom: 20,
-            right: 20,
+            right: 10,
             child: Column(
               children: [
-                const CircleAvatar(
+                CircleAvatar(
                   radius: 25,
                   backgroundColor: Colors.black,
                   foregroundColor: Colors.white,
-                  foregroundImage: NetworkImage(
-                    "https://avatars.githubusercontent.com/u/150661115?v=4",
-                  ),
-                  child: Text(
-                    "니꼬",
-                  ),
+                  child: Text(widget.videoData.creator),
                 ),
                 Gaps.v24,
-                const VideoButton(
-                  icon: FontAwesomeIcons.solidHeart,
-                  text: "2.9M",
+                GestureDetector(
+                  onTap: _onLikeTap,
+                  child: VideoButton(
+                    icon: FontAwesomeIcons.solidHeart,
+                    text: S.of(context).likeCount(widget.videoData.likes),
+                  ),
                 ),
                 Gaps.v24,
                 GestureDetector(
                   onTap: () => _onCommentsTap(context),
-                  child: const VideoButton(
+                  child: VideoButton(
                     icon: FontAwesomeIcons.solidComment,
-                    text: "33K",
+                    text: S.of(context).commentCount(
+                          widget.videoData.comments,
+                        ),
                   ),
                 ),
                 Gaps.v24,
                 const VideoButton(
                   icon: FontAwesomeIcons.share,
                   text: "Share",
-                ),
-                Gaps.v24,
+                )
               ],
             ),
           ),

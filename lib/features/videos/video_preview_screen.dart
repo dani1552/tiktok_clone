@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:tiktok_clone/features/users/view_models/upload_video_view_model.dart';
-import 'package:tiktok_clone/features/videos/view_models/timeline_view_model.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPreviewScreen extends ConsumerStatefulWidget {
@@ -24,7 +23,7 @@ class VideoPreviewScreen extends ConsumerStatefulWidget {
 }
 
 class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
-  VideoPlayerController? _videoPlayerController;
+  late final VideoPlayerController _videoPlayerController;
 
   bool _savedVideo = false;
 
@@ -32,9 +31,11 @@ class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
     _videoPlayerController = VideoPlayerController.file(
       File(widget.video.path),
     );
-    await _videoPlayerController?.initialize();
-    await _videoPlayerController?.setLooping(true);
-    await _videoPlayerController?.play();
+
+    await _videoPlayerController.initialize();
+    await _videoPlayerController.setLooping(true);
+    await _videoPlayerController.setVolume(0);
+//     await _videoPlayerController.play();
 
     setState(() {});
   }
@@ -47,23 +48,27 @@ class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
 
   @override
   void dispose() {
-    _videoPlayerController!.dispose();
+    _videoPlayerController.dispose();
     super.dispose();
   }
 
   Future<void> _saveToGallery() async {
     if (_savedVideo) return;
+
     await GallerySaver.saveVideo(
       widget.video.path,
       albumName: "TikTok Clone!",
     );
+
     _savedVideo = true;
+
     setState(() {});
   }
 
-  void _onUploadPressed() {
-    ref.read(UploadVideoProvider.notifier).uploadVideo(
+  void _onUploadPressed() async {
+    ref.read(uploadVideoProvider.notifier).uploadVideo(
           File(widget.video.path),
+          context,
         );
   }
 
@@ -72,7 +77,7 @@ class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text("Preview video"),
+        title: const Text('Preview video'),
         actions: [
           if (!widget.isPicked)
             IconButton(
@@ -84,20 +89,18 @@ class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
               ),
             ),
           IconButton(
-            onPressed: ref.watch(UploadVideoProvider).isLoading
+            onPressed: ref.watch(uploadVideoProvider).isLoading
                 ? () {}
                 : _onUploadPressed,
-            icon: ref.watch(timelineProvider).isLoading
+            icon: ref.watch(uploadVideoProvider).isLoading
                 ? const CircularProgressIndicator()
                 : const FaIcon(FontAwesomeIcons.cloudArrowUp),
-          ),
+          )
         ],
       ),
-      body: _videoPlayerController?.value.isInitialized == true
-          ? VideoPlayer(_videoPlayerController!)
-          : const Center(
-              child: CircularProgressIndicator(),
-            ),
+      body: _videoPlayerController.value.isInitialized
+          ? VideoPlayer(_videoPlayerController)
+          : null,
     );
   }
 }
