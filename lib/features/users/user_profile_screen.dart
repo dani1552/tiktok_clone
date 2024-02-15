@@ -295,7 +295,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen>
                                 aspectRatio: 9 / 14,
                                 child: FadeInImage.assetNetwork(
                                   fit: BoxFit.cover,
-                                  placeholder: "assets/images/hellokitty.png",
+                                  placeholder: "assets/images/kitty.png",
                                   image:
                                       "https://cdn.pixabay.com/photo/2018/06/23/07/08/cloud-3492198_640.jpg",
                                 ),
