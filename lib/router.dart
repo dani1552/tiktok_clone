@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 // import 'package:provider/provider.dart';
-import 'package:tiktok_clone/common/widgets/main_navigation_screen.dart';
-import 'package:tiktok_clone/features/autentication/widgets/login_screen.dart';
-import 'package:tiktok_clone/features/autentication/widgets/sign_up_screen.dart';
-import 'package:tiktok_clone/features/inbox/activity_screen.dart';
-import 'package:tiktok_clone/features/inbox/chat_detail_screen.dart';
-import 'package:tiktok_clone/features/inbox/chats_screen.dart';
-import 'package:tiktok_clone/features/onbording/interests_screen.dart';
-import 'package:tiktok_clone/features/videos/video_recording_screen.dart';
+import 'package:tiktok_clone/common/widgets/main_navigation/main_navigation_screen.dart';
+import 'package:tiktok_clone/features/autentication/views/login_screen.dart';
+import 'package:tiktok_clone/features/autentication/views/sign_up_screen.dart';
+import 'package:tiktok_clone/features/inbox/views/activity_screen.dart';
+import 'package:tiktok_clone/features/inbox/views/chat_detail_screen.dart';
+import 'package:tiktok_clone/features/inbox/views/chats_screen.dart';
+import 'package:tiktok_clone/features/onbording/widgets/interests_screen.dart';
+import 'package:tiktok_clone/features/videos/views/video_recording_screen.dart';
 
 import 'features/autentication/repos/authentication_repo.dart';
 
