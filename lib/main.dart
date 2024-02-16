@@ -8,22 +8,22 @@ import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/repos/video_playback_config_repo.dart';
 import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
 import 'package:tiktok_clone/firebase_options.dart';
+import 'package:tiktok_clone/generated/l10n.dart';
 import 'package:tiktok_clone/router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); //flutter engine & framework를 묶음
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   await SystemChrome.setPreferredOrientations(
     [
       DeviceOrientation.portraitUp,
     ],
   );
 
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle.dark,
-  );
   final preferences = await SharedPreferences.getInstance();
   final repository = PlaybackConfigRepository(preferences);
 
@@ -31,7 +31,7 @@ void main() async {
     ProviderScope(
       overrides: [
         playbackConfigProvider
-            .overrideWith(() => PlaybackConfigViewModel(repository)),
+            .overrideWith(() => PlaybackConfigViewModel(repository))
       ],
       child: const TikTokApp(),
     ),
@@ -48,34 +48,27 @@ class TikTokApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       title: 'TikTok Clone',
       localizationsDelegates: const [
-        //AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
+        S.delegate,
         GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
       ],
       supportedLocales: const [
-        Locale("en"),
-        Locale("ko"),
-        Locale("es"),
+        Locale('en'),
+        Locale('ko'),
       ],
-      themeMode: ThemeMode.light, //dark mode & light mode
-      //light theme mode
+      themeMode: ThemeMode.system, //dark mode & light mode
       theme: ThemeData(
         useMaterial3: true,
-        brightness: Brightness.light,
         textTheme: Typography.blackMountainView,
+        brightness: Brightness.light,
         scaffoldBackgroundColor: Colors.white,
-        bottomAppBarTheme: BottomAppBarTheme(
-          color: Colors.grey.shade50,
-        ),
         primaryColor: const Color(0xFFE9435A),
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Color(0xFFE9435A),
         ),
         splashColor: Colors.transparent,
-        //highlightColor: Colors.transparent,
         appBarTheme: const AppBarTheme(
-          centerTitle: true,
           foregroundColor: Colors.black,
           backgroundColor: Colors.white,
           surfaceTintColor: Colors.white,
@@ -91,9 +84,10 @@ class TikTokApp extends ConsumerWidget {
           unselectedLabelColor: Colors.grey.shade500,
           indicatorColor: Colors.black,
         ),
-        listTileTheme: const ListTileThemeData(iconColor: Colors.black),
+        listTileTheme: const ListTileThemeData(
+          iconColor: Colors.black,
+        ),
       ),
-      //dark theme mode
       darkTheme: ThemeData(
         useMaterial3: true,
         tabBarTheme: TabBarTheme(
@@ -108,9 +102,9 @@ class TikTokApp extends ConsumerWidget {
         brightness: Brightness.dark,
         scaffoldBackgroundColor: Colors.black,
         appBarTheme: AppBarTheme(
-          centerTitle: true,
           surfaceTintColor: Colors.grey.shade900,
           backgroundColor: Colors.grey.shade900,
+          foregroundColor: Colors.white,
           titleTextStyle: const TextStyle(
             color: Colors.white,
             fontSize: Sizes.size16 + Sizes.size2,

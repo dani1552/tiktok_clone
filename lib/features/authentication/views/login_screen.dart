@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/autentication/view_models/social_auth_view_model.dart';
-import 'package:tiktok_clone/features/autentication/widgets/auth_button.dart';
-import 'package:tiktok_clone/features/autentication/widgets/login_form_screen.dart';
+import 'package:tiktok_clone/features/autentication/views/widgets/login_form_screen.dart';
+import 'package:tiktok_clone/features/authentication/view_models/social_auth_view_model.dart';
+import 'package:tiktok_clone/features/authentication/views/widgets/auth_button.dart';
 import 'package:tiktok_clone/utils.dart';
 
 class LoginScreen extends ConsumerWidget {
